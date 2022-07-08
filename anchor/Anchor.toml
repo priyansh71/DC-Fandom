@@ -1,0 +1,15 @@
+[features]
+seeds = false
+skip-lint = false
+[programs.devnet]
+fandomproject = "3LKwP6PniJASRhjm4JvcdThyG7VAanYzSwA2QWP1za6a"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "/Users/priyanshvyas/.config/solana/id.json"
+
+[scripts]
+test = "node tests/test-program.js"
