@@ -1,0 +1,99 @@
+{
+	"version": "0.1.0",
+	"name": "fandomproject",
+	"instructions": [
+		{
+			"name": "initialize",
+			"accounts": [
+				{
+					"name": "baseAccount",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "user",
+					"isMut": true,
+					"isSigner": true
+				},
+				{
+					"name": "systemProgram",
+					"isMut": false,
+					"isSigner": false
+				}
+			],
+			"args": []
+		},
+		{
+			"name": "addContent",
+			"accounts": [
+				{
+					"name": "baseAccount",
+					"isMut": true,
+					"isSigner": false
+				},
+				{
+					"name": "user",
+					"isMut": true,
+					"isSigner": true
+				}
+			],
+			"args": [
+				{
+					"name": "contentLink",
+					"type": "string"
+				},
+				{
+					"name": "caption",
+					"type": "string"
+				}
+			]
+		}
+	],
+	"accounts": [
+		{
+			"name": "BaseAccount",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "totalContent",
+						"type": "u64"
+					},
+					{
+						"name": "contentList",
+						"type": {
+							"vec": {
+								"defined": "FandomStruct"
+							}
+						}
+					}
+				]
+			}
+		}
+	],
+	"types": [
+		{
+			"name": "FandomStruct",
+			"type": {
+				"kind": "struct",
+				"fields": [
+					{
+						"name": "contentLink",
+						"type": "string"
+					},
+					{
+						"name": "caption",
+						"type": "string"
+					},
+					{
+						"name": "userAddress",
+						"type": "publicKey"
+					}
+				]
+			}
+		}
+	],
+	"metadata": {
+		"address": "3LKwP6PniJASRhjm4JvcdThyG7VAanYzSwA2QWP1za6a"
+	}
+}
