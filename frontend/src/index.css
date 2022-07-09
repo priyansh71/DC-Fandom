@@ -7,16 +7,13 @@ input:-webkit-autofill:active {
 input::placeholder {
 	color: gray;
 	letter-spacing: 0.4px;
-	font-family: "Didact Gothic", sans-serif;
 }
 
 input:focus {
 	outline: none;
 	background: transparent;
-	font-family: "Didact Gothic", sans-serif;
 }
 
 input::backdrop {
 	background: transparent;
-	font-family: "Didact Gothic", sans-serif;
 }

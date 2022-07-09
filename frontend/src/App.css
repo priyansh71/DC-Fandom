@@ -38,6 +38,7 @@ label {
 	flex-direction: column;
 	justify-content: center;
 	padding: 10px;
+	margin-top: 20px;
 }
 
 .authed-container {

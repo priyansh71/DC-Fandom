@@ -299,7 +299,7 @@ const App = () => {
 								<VerticalSpacer n={5} />
 								<BiUpvote
 									fontSize="20"
-									color={ Number(item.votes) > 0 ? "#1E8057" : colorPalette.neutral[100]}
+									color={ Number(item.votes) > 0 ? "#1E8057" : "#fefefe" }
 									onClick={() => upVote(index)}
 									style={{
 										marginTop: "2px",
