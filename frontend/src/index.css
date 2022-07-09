@@ -4,16 +4,3 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
 	transition: all 0s 50000s;
 }
-input::placeholder {
-	color: gray;
-	letter-spacing: 0.4px;
-}
-
-input:focus {
-	outline: none;
-	background: transparent;
-}
-
-input::backdrop {
-	background: transparent;
-}

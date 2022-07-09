@@ -223,8 +223,10 @@ const App = () => {
 					<div className="connected-inputs">
 						<InputField
 							value={contentLink}
+							className="input"
 							label="Content Link"
 							onChange={e => setContentLink(e.target.value)}
+							spellCheck="false"
 							inputMode="url"
 							colorConfig={{
 								textColor: "#fefefe",
@@ -239,10 +241,13 @@ const App = () => {
 								},
 							}}
 							colorMode="dark"
+							autoFocus
 							placeholder="Enter content link!"
 						/>
 						<InputField
 							label="Caption"
+							className="input"
+							spellCheck="false"
 							inputMode="text"
 							colorMode="dark"
 							colorConfig={{
@@ -285,9 +290,9 @@ const App = () => {
 					{contentList.map((item, index) => (
 						<Column className="gif-item v-center" key={index}>
 							<img src={item.contentLink} alt={item} />
-							<Row className="v-justify">
+							<Row className="v-justify" style={{margin : "10px"}}>
 								<Typography
-									{...FontVariant.CirkaHeadingBold18}
+									{...FontVariant.HeadingBold18}
 									color={colorPalette.success[100]}
 									style={{
 										fontFamily: "Quicksand",
