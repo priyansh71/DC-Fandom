@@ -6,6 +6,9 @@ declare_id!("3LKwP6PniJASRhjm4JvcdThyG7VAanYzSwA2QWP1za6a");
 pub mod fandomproject {
     use super::*;
 
+     /*
+    * @dev : This is the main function of the program.
+     */
     pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
         base_account.total_content = 0;
@@ -13,11 +16,14 @@ pub mod fandomproject {
         Ok(())
     }
 
+     /*
+    * @dev : This function is used to create a new content.
+     */
     pub fn add_content(ctx : Context<AddContent>, content_link : String, caption : String) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
         let user = &mut ctx.accounts.user;
         
-        // Build structure 
+        // Build the content object
         let item = FandomStruct {
             content_link: content_link.to_string(),
             caption: caption.to_string(),
@@ -31,6 +37,9 @@ pub mod fandomproject {
         Ok(())
     }
 
+    /*
+    * @dev : Vote for a content
+    */
     pub fn update_content(ctx : Context<UpdateContent>, string_id : String) -> Result<()> {
         let base_account = &mut ctx.accounts.base_account;
 
@@ -89,6 +98,7 @@ pub struct BaseAccount {
     pub content_list : Vec<FandomStruct>,
 }
 
+// Custom Error Enum
 #[error_code]
 pub enum ErrorCode {
     #[msg("Invalid ID")]
