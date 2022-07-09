@@ -13,6 +13,12 @@ body {
 	width: 70px;
 }
 
+label {
+	font-family: "Didact Gothic", sans-serif;
+	margin: 20px 0 0 0;
+	color: #bababa;
+}
+
 .connect-wallet-container {
 	display: flex;
 	flex-direction: column;
@@ -31,74 +37,39 @@ body {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding: 20px;
+	padding: 10px;
 }
 
 .authed-container {
-	height: 100%;
+	height: 80%;
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
 }
 
 .header-container {
-	margin: 20px auto;
+	margin: 15px auto;
 }
 
 .header {
 	font-size: 50px;
 	font-weight: bold;
 	color: white;
+	margin: 25px;
 	font-family: "Didact Gothic", sans-serif;
-}
-
-.sub-text {
-	font-size: 25px;
-	color: white;
-	font-family: "Quicksand", sans-serif;
-}
-
-.gradient-text {
-	background: -webkit-linear-gradient(left, #60c657 30%, #35aee2 60%);
-	background-clip: text;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
 }
 
 .cta-button {
 	height: 45px;
 	border: 0;
 	width: 40vw;
-	margin: 0 auto;
-	padding-left: 40px;
-	padding-right: 40px;
+	margin: auto;
+	font-family: "Quicksand", sans-serif;
 	border-radius: 10px;
 	cursor: pointer;
 	font-size: 16px;
 	font-weight: bold;
-	color: white;
 	cursor: pointer;
-}
-
-.connect-wallet-button {
-	background-image: linear-gradient(
-		to right,
-		#131413 0%,
-		#1c1f1d 0%,
-		#183b28 22%,
-		#244241 51%,
-		#0a5f40 78%,
-		#047f66 100%
-	);
-	background-size: 200% 200%;
-	animation: gradient-animation 4s ease infinite;
-	font-family: "Montserrat", sans-serif;
-}
-
-.submit-gif-button {
-	background: -webkit-linear-gradient(left, #4e44ce, #35aee2);
-	background-size: 200% 200%;
-	animation: gradient-animation 4s ease infinite;
 }
 
 .footer-container {
@@ -119,7 +90,7 @@ body {
 }
 
 .footer-text {
-	color: white;
+	color: rgb(215, 215, 215);
 	font-size: 19px;
 	font-weight: bold;
 	text-decoration: none;
@@ -131,7 +102,7 @@ body {
 	grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
 	grid-gap: 1.5rem;
 	justify-items: center;
-	margin: 30px;
+	margin: 20px;
 	padding: 0;
 }
 
@@ -150,13 +121,9 @@ body {
 .gif-item img {
 	width: 100%;
 	height: 300px;
-	margin: 15px;
+	margin: 10px;
 	border-radius: 10px;
 	object-fit: cover;
-}
-
-.gif-item span {
-	text-align: center;
 }
 
 .connected-inputs {
@@ -171,61 +138,5 @@ form {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-}
-
-#gif[type="text"] {
-	color: white;
-	font-size: 18px;
-	width: 40vw;
-	padding: 20px;
-	height: 50px;
-	box-sizing: border-box;
-	border: 1px solid rgb(205, 255, 210);
-	background-color: transparent;
-	border-radius: 10px;
-	margin: 10px auto;
-	font-family: "Didact Gothic", sans-serif;
-}
-
-#comment[type="text"] {
-	color: white;
-	font-size: 18px;
-	width: 30vw;
-	padding: 20px;
-	height: 50px;
-	box-sizing: border-box;
-	background-color: transparent;
-	border: 1px solid rgb(205, 255, 210);
-	border-radius: 10px;
-	margin: 10px auto;
-	font-family: "Didact Gothic", sans-serif;
-}
-
-input::placeholder {
-	color: gray;
-	letter-spacing: 0.4px;
-	font-family: "Didact Gothic", sans-serif;
-}
-
-input:focus {
-	outline: none;
-	background: transparent;
-	font-family: "Didact Gothic", sans-serif;
-}
-
-input::backdrop {
-	background: transparent;
-	font-family: "Didact Gothic", sans-serif;
-}
-.connected-container button {
-	background: -webkit-linear-gradient(left, #02521c, #244234);
-	font-size: 18px;
-	background-size: 200% 200%;
-	animation: gradient-animation 4s ease infinite;
-	font-family: "Quicksand", sans-serif;
-	margin: 20px 10px;
-	width: fit-content;
-	height: 50px;
-	border-radius: 10px;
-	padding: 0.6rem 2rem;
+	margin: 25px;
 }

@@ -1,20 +1,22 @@
-body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
 	transition: all 0s 50000s;
+}
+input::placeholder {
+	color: gray;
+	letter-spacing: 0.4px;
+	font-family: "Didact Gothic", sans-serif;
+}
+
+input:focus {
+	outline: none;
+	background: transparent;
+	font-family: "Didact Gothic", sans-serif;
+}
+
+input::backdrop {
+	background: transparent;
+	font-family: "Didact Gothic", sans-serif;
 }
