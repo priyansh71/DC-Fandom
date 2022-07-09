@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { Program, Provider, web3 } from "@project-serum/anchor";
+import {
+	Button,
+	Column,
+	HorizontalDivider,
+	InputField,
+	Typography,
+} from "@cred/neopop-web/lib/components";
+import { colorPalette, FontVariant } from "@cred/neopop-web/lib/primitives";
 import twitterLogo from "./assets/twitter-logo.svg";
 import idl from "./utils/idl.json";
-import kp from './keypair.json'
+import kp from "./keypair.json";
 import "./App.css";
 
 // reference to the Solana runtime
 const { SystemProgram } = web3;
 
-const arr = Object.values(kp._keypair.secretKey)
-const secret = new Uint8Array(arr)
+const arr = Object.values(kp._keypair.secretKey);
+const secret = new Uint8Array(arr);
 const baseAccount = web3.Keypair.fromSecretKey(secret);
 
 // get our program's id from the IDL file
@@ -24,33 +32,14 @@ const opts = {
 	preflightCommitment: "processed",
 };
 
-// const TEST_GIFS = [
-// 	{
-// 		link: "https://media.giphy.com/media/4eGUxJc4lplh6/giphy.gif",
-// 		comment: "I love the way Batman's eyes are shown in animations",
-// 	},
-// 	{
-// 		link: "https://media.giphy.com/media/3oEjI4MOMgxg3apmMg/giphy.gif",
-// 		comment: "Arrow made me appreciate DC so much more.",
-// 	},
-// 	{
-// 		link: "https://media.giphy.com/media/xwvT0qtK4FtgQ/giphy.gif",
-// 		comment: "Wonder woman is <3.",
-// 	},
-// 	{
-// 		link: "https://media.giphy.com/media/dzgqtSFuYRCwg/giphy.gif",
-// 		comment: "Best supervillian ever.",
-// 	},
-// ];
 const TWITTER_HANDLE = "priyansh_71";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const App = () => {
 	const [walletAddress, setWalletAddress] = useState(null);
-	const [link, setLink] = useState("");
-	const [comment, setComment] = useState("");
+	const [contentLink, setContentLink] = useState("");
+	const [caption, setCaption] = useState("");
 	const [contentList, setContentList] = useState([]);
-
 
 	const checkIfWalletIsConnected = async () => {
 		try {
@@ -126,58 +115,86 @@ const App = () => {
 	};
 
 	const sendContent = async () => {
-		if(link.length === 0){
-			console.log("No gif link given!")
-			return
+		if (contentLink.length === 0) {
+			console.log("No content given!");
+			return;
 		}
 		try {
 			const provider = getProvider();
 			const program = new Program(idl, programID, provider);
-		
-			await program.rpc.addContent(link, comment, {
-			  accounts: {
-				baseAccount: baseAccount.publicKey,
-				user: provider.wallet.publicKey,
-			  },
+
+			await program.rpc.addContent(contentLink, caption, {
+				accounts: {
+					baseAccount: baseAccount.publicKey,
+					user: provider.wallet.publicKey,
+				},
 			});
-			console.log("Content sent : ", link)
-			
-			setLink("");
-			setComment("");
+			console.log("Content sent : ", contentLink);
+
+			setContentLink("");
+			setCaption("");
 			await getContentList();
-		  } catch (error) {
-			console.log("Error sending content:", error)
-		  }
-		};
+		} catch (error) {
+			console.log("Error sending content:", error);
+		}
+	};
 
 	const renderNotConnectedContainer = () => (
 		<div className="connect-wallet-container">
 			<img
-				src="https://media.giphy.com/media/ItCjeMCC34gZG/giphy.gif"
-				height="320px"
+				src="https://media.giphy.com/media/l0NwGpoOVLTAyUJSo/giphy.gif"
+				width="600px"
 				alt="Batman GIF"
 			/>
-			<button
-				className="cta-button connect-wallet-button"
+			<Button
+				variant="elevated"
+				style={{
+					margin: "auto",
+					fontFamily: "Montserrat",
+				}}
+				textStyle={{
+					fontSize: 18,
+					fontWeight: "bold",
+				}}
+				kind="elevated"
+				borderColor="#244234"
+				elevationDirection="left-bottom"
+				size="big"
+				colorMode="dark"
+				color="#244234"
 				onClick={connectWallet}
 			>
 				Connect Wallet
-			</button>
+			</Button>
 		</div>
 	);
 
 	const renderConnectedContainer = () =>
 		contentList === null ? (
 			<div className="connected-container">
-				<button
-					className="cta-button submit-gif-button"
+				<Button
+					variant="elevated"
+					style={{
+						margin: "auto",
+						fontFamily: "Montserrat",
+					}}
+					textStyle={{
+						fontSize: 18,
+						fontWeight: "bold",
+					}}
+					kind="elevated"
+					borderColor="#244234"
+					elevationDirection="left-bottom"
+					size="big"
+					colorMode="dark"
+					color="#244234"
 					onClick={createAccountForContent}
 				>
-					Do One-Time Initialization content's Solana Account
-				</button>
+					Do One-Time initialization of content's Solana Account
+				</Button>
 			</div>
 		) : (
-			<div className="connected-container">
+			<Column>
 				<form
 					onSubmit={event => {
 						event.preventDefault();
@@ -185,34 +202,89 @@ const App = () => {
 					}}
 				>
 					<div className="connected-inputs">
-						<input
-							type="text"
-							value={link}
-							onChange={e => setLink(e.target.value)}
-							id="gif"
-							placeholder="Enter gif link!"
+						<InputField
+							value={contentLink}
+							label="Content Link"
+							onChange={e => setContentLink(e.target.value)}
+							inputMode="url"
+							colorConfig={{
+								textColor: "#fefefe",
+								placeholderColor: "#aeaeae",
+							}}
+							textStyle={{
+								label: {
+									fontSize: 16,
+								},
+							}}
+							colorMode="dark"
+							placeholder="Enter content link!"
 						/>
-						<input
-							type="text"
-							id="comment"
-							value={comment}
-							onChange={e => setComment(e.target.value)}
-							placeholder="Any comments?"
+						<InputField
+							label="Caption"
+							inputMode="text"
+							colorMode="dark"
+							colorConfig={{
+								textColor: "#fefefe",
+								placeholderColor: "#aeaeae",
+							}}
+							textStyle={{
+								label: {
+									fontSize: 16,
+								},
+							}}
+							value={caption}
+							onChange={e => setCaption(e.target.value)}
+							placeholder="Fancy a caption?"
 						/>
 					</div>
-					<button type="submit" className="cta-button submit-gif-button">
+					<Button
+						variant="elevated"
+						typeof="submit"
+						className="cta-button"
+						textStyle={{
+							fontSize: 18,
+							fontWeight: "bold",
+						}}
+						showArrow={true}
+						kind="elevated"
+						elevationDirection="left-bottom"
+						size="big"
+						colorMode="dark"
+						color="#244234"
+					>
 						Submit
-					</button>
+					</Button>
 				</form>
+
+				<center>
+					<HorizontalDivider
+						color={colorPalette.popBlack[100]}
+						style={{
+							width: "80vw",
+							textAlign: "center",
+						}}
+					/>
+					;
+				</center>
+
 				<div className="gif-grid">
-					{contentList.map((item,index) => (
-						<div className="gif-item" key={index}>
+					{contentList.map((item, index) => (
+						<Column className="gif-item v-center" key={index}>
 							<img src={item.contentLink} alt={item} />
-							<span>{item.caption}</span>
-						</div>
+							<Typography
+								{...FontVariant.CirkaHeadingBold18}
+								color={colorPalette.success[100]}
+								style={{
+									fontFamily: "Quicksand",
+									textAlign: "center",
+								}}
+							>
+								{item.caption}
+							</Typography>
+						</Column>
 					))}
 				</div>
-			</div>
+			</Column>
 		);
 
 	const getContentList = async () => {
@@ -258,12 +330,21 @@ const App = () => {
 						/>
 						&nbsp;Fandom
 					</p>
-					<p className="sub-text">
-						Post regarding literally <strong>anything</strong> in DC.
-					</p>
+					<Typography
+						{...FontVariant.HeadingBold20}
+						color={colorPalette.popWhite[500]}
+						style={{
+							fontFamily: "Quicksand",
+							margin: "20px",
+						}}
+					>
+						Post regarding anything in DC.
+					</Typography>
 				</div>
 
-				{walletAddress ? renderConnectedContainer() : renderNotConnectedContainer()}
+				{walletAddress
+					? renderConnectedContainer()
+					: renderNotConnectedContainer()}
 
 				<div className="footer-container">
 					<img
