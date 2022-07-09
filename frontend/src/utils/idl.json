@@ -47,6 +47,22 @@
 					"type": "string"
 				}
 			]
+		},
+		{
+			"name": "updateContent",
+			"accounts": [
+				{
+					"name": "baseAccount",
+					"isMut": true,
+					"isSigner": false
+				}
+			],
+			"args": [
+				{
+					"name": "stringId",
+					"type": "string"
+				}
+			]
 		}
 	],
 	"accounts": [
@@ -86,11 +102,22 @@
 						"type": "string"
 					},
 					{
+						"name": "votes",
+						"type": "u8"
+					},
+					{
 						"name": "userAddress",
 						"type": "publicKey"
 					}
 				]
 			}
+		}
+	],
+	"errors": [
+		{
+			"code": 6000,
+			"name": "UpdateContent",
+			"msg": "Invalid ID"
 		}
 	],
 	"metadata": {

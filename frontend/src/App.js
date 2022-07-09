@@ -4,11 +4,13 @@ import { Program, Provider, web3 } from "@project-serum/anchor";
 import {
 	Button,
 	Column,
-	HorizontalDivider,
 	InputField,
+	Row,
 	Typography,
+	VerticalSpacer,
 } from "@cred/neopop-web/lib/components";
 import { colorPalette, FontVariant } from "@cred/neopop-web/lib/primitives";
+import { BiUpvote } from "react-icons/bi";
 import twitterLogo from "./assets/twitter-logo.svg";
 import idl from "./utils/idl.json";
 import kp from "./keypair.json";
@@ -139,6 +141,23 @@ const App = () => {
 		}
 	};
 
+	const upVote = async (contentID) => {
+		try {
+			const provider = getProvider();
+			const program = new Program(idl, programID, provider);
+
+			await program.rpc.updateContent(contentID.toString(), {
+				accounts: {
+					baseAccount: baseAccount.publicKey
+				}
+			});
+			console.log("Content upvoted : ", contentID);
+			await getContentList();
+		} catch (error) {
+			console.log("Error upvoting content:", error);
+		}
+	}
+
 	const renderNotConnectedContainer = () => (
 		<div className="connect-wallet-container">
 			<img
@@ -213,7 +232,10 @@ const App = () => {
 							}}
 							textStyle={{
 								label: {
-									fontSize: 16,
+									fontSize: 15,
+								},
+								input: {
+									fontSize: 19,
 								},
 							}}
 							colorMode="dark"
@@ -229,7 +251,10 @@ const App = () => {
 							}}
 							textStyle={{
 								label: {
-									fontSize: 16,
+									fontSize: 15,
+								},
+								input: {
+									fontSize: 19,
 								},
 							}}
 							value={caption}
@@ -242,13 +267,13 @@ const App = () => {
 						typeof="submit"
 						className="cta-button"
 						textStyle={{
-							fontSize: 18,
+							fontSize: 16,
 							fontWeight: "bold",
 						}}
 						showArrow={true}
 						kind="elevated"
 						elevationDirection="left-bottom"
-						size="big"
+						size="medium"
 						colorMode="dark"
 						color="#244234"
 					>
@@ -256,31 +281,33 @@ const App = () => {
 					</Button>
 				</form>
 
-				<center>
-					<HorizontalDivider
-						color={colorPalette.popBlack[100]}
-						style={{
-							width: "80vw",
-							textAlign: "center",
-						}}
-					/>
-					;
-				</center>
-
 				<div className="gif-grid">
 					{contentList.map((item, index) => (
 						<Column className="gif-item v-center" key={index}>
 							<img src={item.contentLink} alt={item} />
-							<Typography
-								{...FontVariant.CirkaHeadingBold18}
-								color={colorPalette.success[100]}
-								style={{
-									fontFamily: "Quicksand",
-									textAlign: "center",
-								}}
-							>
-								{item.caption}
-							</Typography>
+							<Row className="v-justify">
+								<Typography
+									{...FontVariant.CirkaHeadingBold18}
+									color={colorPalette.success[100]}
+									style={{
+										fontFamily: "Quicksand",
+										textAlign: "center",
+									}}
+								>
+									{item.caption}
+								</Typography>
+								<VerticalSpacer n={5} />
+								<BiUpvote
+									fontSize="20"
+									color={ Number(item.votes) > 0 ? "#1E8057" : colorPalette.neutral[100]}
+									onClick={() => upVote(index)}
+									style={{
+										marginTop: "2px",
+										cursor: "pointer",
+									}}
+								/>
+								<span>{item.votes}</span>
+							</Row>
 						</Column>
 					))}
 				</div>
