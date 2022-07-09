@@ -21,6 +21,7 @@ pub mod fandomproject {
         let item = FandomStruct {
             content_link: content_link.to_string(),
             caption: caption.to_string(),
+            votes : 0,
             user_address : *user.to_account_info().key,
         };
 
@@ -28,6 +29,19 @@ pub mod fandomproject {
         base_account.total_content += 1;
 
         Ok(())
+    }
+
+    pub fn update_content(ctx : Context<UpdateContent>, string_id : String) -> Result<()> {
+        let base_account = &mut ctx.accounts.base_account;
+
+        let id = string_id.parse::<usize>().unwrap();
+        if id >= base_account.content_list.len(){
+            return Err(ErrorCode::UpdateContent.into());
+        }
+        base_account.content_list[id].votes += 1;
+
+        Ok(())
+
     }
 }
 
@@ -41,7 +55,8 @@ pub struct Initialize<'info> {
     pub system_program: Program <'info, System>,
 }
 
-//  The context that we utilize in the add_content function.
+
+//  The context that we utilize in the add_Content function.
 #[derive(Accounts)]
 pub struct AddContent<'info> {
   #[account(mut)]
@@ -50,11 +65,20 @@ pub struct AddContent<'info> {
   pub user: Signer<'info>,
 }
 
+//  The context that we utilize in the update_content function.
+#[derive(Accounts)]
+pub struct UpdateContent<'info> {
+  #[account(mut)]
+  pub base_account: Account<'info, BaseAccount>,
+
+}
+
 // The structure that we will store the content that needs to be pushed from the fronted.
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct FandomStruct {
     pub content_link: String,
     pub caption: String,
+    pub votes : u8,
     pub user_address: Pubkey,
 }
 
@@ -63,4 +87,10 @@ pub struct FandomStruct {
 pub struct BaseAccount {
     pub total_content : u64,
     pub content_list : Vec<FandomStruct>,
+}
+
+#[error_code]
+pub enum ErrorCode {
+    #[msg("Invalid ID")]
+    UpdateContent,
 }

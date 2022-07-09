@@ -25,8 +25,8 @@ const main = async () => {
   console.log("Content count", account.totalContent.toString());
 
   await program.rpc.addContent(
-    "https://media.giphy.com/media/QELH6jesNlZO8/giphy.gif",
-    "She is so fucking poweful.",
+    "https://media.giphy.com/media/oMLJaPmbUnoC4/giphy.gif",
+    "Batsignal is insanely accurate",
     {
       accounts: {
         baseAccount: baseAccount.publicKey,
@@ -38,6 +38,15 @@ const main = async () => {
   account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("Content count", account.totalContent.toString());
 
+  console.log("Content list", account.contentList);
+
+  await program.rpc.updateContent( "0", {
+    accounts: {
+      baseAccount: baseAccount.publicKey,
+    }
+  });
+
+  account = await program.account.baseAccount.fetch(baseAccount.publicKey);
   console.log("Content list", account.contentList);
   console.log("🚀 Test finished.");
 };
