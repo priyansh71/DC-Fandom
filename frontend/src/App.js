@@ -77,6 +77,9 @@ const App = () => {
 					response.publicKey.toString()
 				);
 				setWalletAddress(response.publicKey.toString());
+			} else {
+				alert("Solana object not found, check your console!");
+				console.log("Please visit https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa?hl=en or https://addons.mozilla.org/en-US/firefox/addon/phantom-app/ depending on your browser to install the Phantom Wallet.");
 			}
 		} catch (err) {
 			console.log(err);
